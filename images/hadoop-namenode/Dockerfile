@@ -3,7 +3,7 @@
 #
 # 1. Hadoop updated to 2.8.5
 
-FROM johannestang/hadoop-base:2.0.0-hadoop2.8.5-java8
+FROM vkotha/hadoop-base:2.0.0-hadoop2.8.5-java8
 MAINTAINER johs@johs.me
 
 HEALTHCHECK CMD curl -f http://localhost:50070/ || exit 1
@@ -15,6 +15,11 @@ VOLUME /hadoop/dfs/name
 ADD run.sh /run.sh
 RUN chmod a+x /run.sh
 
+# namenode web ui
 EXPOSE 50070
-
+# yarn resourcemanger web ui
+EXPOSE 8088
+# yarn historyservice web ui
+EXPOSE 8188
+ 
 CMD ["/run.sh"]

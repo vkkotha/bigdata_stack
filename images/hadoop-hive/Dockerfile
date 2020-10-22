@@ -5,7 +5,7 @@
 # 2. Hive updated to 2.3.6
 # 3. AWS S3 jars added
 
-FROM johannestang/hadoop-base:2.0.0-hadoop2.8.5-java8
+FROM vkotha/hadoop-base:2.0.0-hadoop2.8.5-java8
 
 MAINTAINER johs@johs.me
 
@@ -20,15 +20,11 @@ ENV HADOOP_HOME /opt/hadoop-$HADOOP_VERSION
 WORKDIR /opt
 
 #Install Hive and PostgreSQL JDBC
-RUN apt-get update && apt-get install -y wget procps && \
-	wget https://archive.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz && \
+RUN wget https://archive.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HIVE_VERSION-bin.tar.gz && \
 	tar -xzvf apache-hive-$HIVE_VERSION-bin.tar.gz && \
 	mv apache-hive-$HIVE_VERSION-bin hive && \
 	wget https://jdbc.postgresql.org/download/postgresql-9.4.1212.jar -O $HIVE_HOME/lib/postgresql-jdbc.jar && \
-	rm apache-hive-$HIVE_VERSION-bin.tar.gz && \
-	apt-get --purge remove -y wget && \
-	apt-get clean && \
-	rm -rf /var/lib/apt/lists/*
+	rm apache-hive-$HIVE_VERSION-bin.tar.gz
 
 
 #Spark should be compiled with Hive to be able to use it
@@ -49,10 +45,13 @@ RUN chmod +x /usr/local/bin/startup.sh
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-RUN curl -L http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/${AWS_VERSION}/aws-java-sdk-${AWS_VERSION}.jar -o /opt/hive/lib/aws-java-sdk.jar && \
-    curl -L http://central.maven.org/maven2/com/amazonaws/aws-java-sdk-core/${AWS_VERSION}/aws-java-sdk-core-${AWS_VERSION}.jar -o /opt/hive/lib/aws-java-sdk-core.jar && \
-    curl -L http://central.maven.org/maven2/com/amazonaws/aws-java-sdk-s3/${AWS_VERSION}/aws-java-sdk-s3-${AWS_VERSION}.jar -o /opt/hive/lib/aws-java-sdk-s3.jar && \
-    curl -L http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar -o /opt/hive/lib/hadoop-aws.jar
+RUN mkdir -p ${HIVE_HOME}/auxlib
+RUN cp ${HADOOP_PREFIX}/share/hadoop/tools/lib/*aws*.jar ${HIVE_HOME}/auxlib
+RUN cp ${HADOOP_PREFIX}/share/hadoop/tools/lib/*jackson*.jar ${HIVE_HOME}/auxlib
+# RUN curl -L https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/${AWS_VERSION}/aws-java-sdk-${AWS_VERSION}.jar -o /opt/hive/lib/aws-java-sdk-${AWS_VERSION}.jar && \
+#    	curl -L https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-core/${AWS_VERSION}/aws-java-sdk-core-${AWS_VERSION}.jar -o /opt/hive/lib/aws-java-sdk-core-${AWS_VERSION}.jar && \
+#    	curl -L https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-s3/${AWS_VERSION}/aws-java-sdk-s3-${AWS_VERSION}.jar -o /opt/hive/lib/aws-java-sdk-s3-${AWS_VERSION}.jar && \
+#    	curl -L https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar -o /opt/hive/lib/hadoop-aws-${HADOOP_VERSION}.jar
 
 EXPOSE 10000
 EXPOSE 10002

@@ -27,7 +27,7 @@ function configure() {
         var="${envPrefix}_${c}"
         value=${!var}
         echo " - Setting $name=$value"
-        addProperty /etc/hadoop/$module-site.xml $name "$value"
+        addProperty $path $name "$value"
     done
 }
 
@@ -36,6 +36,8 @@ configure /etc/hadoop/hdfs-site.xml hdfs HDFS_CONF
 configure /etc/hadoop/yarn-site.xml yarn YARN_CONF
 configure /etc/hadoop/httpfs-site.xml httpfs HTTPFS_CONF
 configure /etc/hadoop/kms-site.xml kms KMS_CONF
+configure /etc/hadoop/mapred-site.xml mapred MAPRED_CONF
+configure /etc/tez/conf/tez-site.xml tez TEZ_SITE_CONF
 
 if [ "$MULTIHOMED_NETWORK" = "1" ]; then
     echo "Configuring for multihomed network"

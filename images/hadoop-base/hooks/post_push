@@ -1,5 +1,5 @@
 #!/bin/bash
-REPO=johannestang
+REPO=vkotha
 IMAGE=hadoop-base
 VERSION=2.0.0-hadoop$(grep HADOOP_VERSION Dockerfile | head -n 1 | awk '{print $3}')-java8
 docker tag $IMAGE_NAME ${REPO}/${IMAGE}:${VERSION}

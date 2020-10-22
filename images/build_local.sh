@@ -1,5 +1,5 @@
 #!/bin/bash
-REPO=johannestang
+REPO=vkotha
 
 # Hadoop base
 cd hadoop-base
@@ -45,3 +45,8 @@ VERSION=${HUE_VERSION}-presto${PRESTO_VERSION}
 docker build -t ${REPO}/${IMAGE}:${VERSION} .
 cd ..
 
+# Tez-ui
+cd tez-ui
+Image=tez-ui
+docker build -t ${REPO}/tez-ui .
+cd ..
