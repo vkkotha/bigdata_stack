@@ -45,6 +45,15 @@ RUN chmod +x /usr/local/bin/startup.sh
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+COPY setup-llap.sh /opt/hive/bin 
+RUN chmod +x /opt/hive/bin/setup-llap.sh
+
+RUN mkdir -p /opt/hive/slider
+COPY slider_0.93.0-1_all.deb /tmp
+RUN apt-get install -y --allow-unauthenticated /tmp/slider_0.93.0-1_all.deb
+ENV PATH $PATH:/usr/lib/slider/bin
+
+
 RUN mkdir -p ${HIVE_HOME}/auxlib
 RUN cp ${HADOOP_PREFIX}/share/hadoop/tools/lib/*aws*.jar ${HIVE_HOME}/auxlib
 RUN cp ${HADOOP_PREFIX}/share/hadoop/tools/lib/*jackson*.jar ${HIVE_HOME}/auxlib

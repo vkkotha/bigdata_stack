@@ -37,6 +37,7 @@ configure /etc/hadoop/yarn-site.xml yarn YARN_CONF
 configure /etc/hadoop/httpfs-site.xml httpfs HTTPFS_CONF
 configure /etc/hadoop/kms-site.xml kms KMS_CONF
 configure /etc/hadoop/mapred-site.xml mapred MAPRED_CONF
+configure /etc/hadoop/capacity-scheduler.xml capacity CAPACITY_CONF
 configure /etc/tez/conf/tez-site.xml tez TEZ_SITE_CONF
 
 if [ "$MULTIHOMED_NETWORK" = "1" ]; then
@@ -52,7 +53,6 @@ if [ "$MULTIHOMED_NETWORK" = "1" ]; then
 
     # YARN
     addProperty /etc/hadoop/yarn-site.xml yarn.resourcemanager.bind-host 0.0.0.0
-    addProperty /etc/hadoop/yarn-site.xml yarn.nodemanager.bind-host 0.0.0.0
     addProperty /etc/hadoop/yarn-site.xml yarn.nodemanager.bind-host 0.0.0.0
     addProperty /etc/hadoop/yarn-site.xml yarn.timeline-service.bind-host 0.0.0.0
 

@@ -37,6 +37,7 @@ configure /etc/hadoop/yarn-site.xml yarn YARN_CONF
 configure /etc/hadoop/httpfs-site.xml httpfs HTTPFS_CONF
 configure /etc/hadoop/kms-site.xml kms KMS_CONF
 configure /etc/hadoop/mapred-site.xml mapred MAPRED_CONF
+configure /etc/hadoop/capacity-scheduler.xml capacity CAPACITY_CONF
 configure /opt/hive/conf/hive-site.xml hive HIVE_SITE_CONF
 configure /etc/tez/conf/tez-site.xml tez TEZ_SITE_CONF
 

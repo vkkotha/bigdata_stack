@@ -10,7 +10,7 @@ MAINTAINER johs@johs.me
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-8-jdk
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends net-tools curl netcat gnupg procps wget
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends net-tools curl netcat gnupg procps wget python2.7 python-pip vim
 
 RUN curl -L https://www.apache.org/dist/hadoop/common/KEYS -o /tmp/KEYS
 RUN gpg --import /tmp/KEYS; exit 0

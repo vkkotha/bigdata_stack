@@ -61,3 +61,11 @@ The scripts directory contains some helper scripts:
  - `init-superset.sh`: Initialize Superset database and add Presto as data source
  - `presto-cli.sh`: Launch Presto CLI (downloads jar if needed)
 
+Building Containers
+- `cd images`
+- `./build_local.sh`
+
+Running cluster
+- Allocate atleast 4 CPUs and 8GB to docker.
+- `docker-compose up -d`
+- `docker-compose -f hue/docker-compose.yml up -d`
