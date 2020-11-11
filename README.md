@@ -70,6 +70,38 @@ Running cluster
 - `docker-compose up -d`
 - `docker-compose -f hue/docker-compose.yml up -d`
 
+Building Slider debian package from Source
+- In the hadoop docker container do the following
+- Start a bash container with hadoop-base
+- Make sure pyton 2.7 and maven 3.0+ is installed
+- Make sure gcc tools are installed to build protobuf
+- Build protobuf 2.5.0
+    `cd /usr/local/src/`
+    `wget https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz`
+    `tar xvf protobuf-2.5.0.tar.gz`
+    `cd protobuf-2.5.0`
+    `./autogen.sh`
+    `./configure --prefix=/usr`
+    `make`
+    `make install`
+    `protoc --version`
+- Build protobuf for java
+    `cd java`
+    `mvn install`
+    `mvn package`
+- Install rmp package manager on debian
+- Build slider 0.92
+    `cd <slider_srv>`
+    `mvn clean installl -DskipTests -Prpm`
+    - rpm files are build under slider-assembly/target/rpm/slider/RPMS/noarch
+- Install rmp packages on debian
+    `sudo apt-get install alien`
+    `sudo alien <package>.rpm`
+    `sudo dpkg -i <pacakget>.deb`
+
+
 Sites
 - [big-data-running-sql-queries](https://johs.me/posts/big-data-stack-running-sql-queries/)
 - [How to start Hive LLAP](http://eastcirclek.blogspot.com/2016/10/how-to-start-hive-llap-functionality.html)
+- [Building and installing Tez 0.9.2](http://tez.apache.org/install.html)
+- [Building apache slider 0.92] (https://svn.apache.org/repos/infra/websites/production/slider/content/developing/building.html)
