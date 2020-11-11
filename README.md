@@ -69,3 +69,7 @@ Running cluster
 - Allocate atleast 4 CPUs and 8GB to docker.
 - `docker-compose up -d`
 - `docker-compose -f hue/docker-compose.yml up -d`
+
+Sites
+- [big-data-running-sql-queries](https://johs.me/posts/big-data-stack-running-sql-queries/)
+- [How to start Hive LLAP](http://eastcirclek.blogspot.com/2016/10/how-to-start-hive-llap-functionality.html)
